@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Adeola ❤️</title>
+<style>
+:root {
+--primary: #ff4d6d;
+--secondary: #ff3b6b;
+--bg: #ffd6e0;
+}
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, var(--bg), #fff);
+text-align: center;
+padding: 20px;
+margin: 0;
+overflow-x: hidden;
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.card {
+max-width: 400px;
+width: 100%;
+background: white;
+padding: 30px;
+border-radius: 25px;
+box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+position: relative;
+z-index: 10;
+}
+h1 { color: var(--secondary); margin-bottom: 10px; }
+p { color: #555; line-height: 1.5; }
+button {
+padding: 12px 28px;
+border: none;
+border-radius: 50px;
+background: var(--primary);
+color: white;
+font-size: 16px;
+font-weight: 600;
+margin: 10px;
+cursor: pointer;
+transition: 0.3s;
+box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+}
+button:hover { transform: scale(1.05); background: var(--secondary); }
+.hidden { display: none; }
+.progress-container {
+height: 8px;
+background: #f0f0f0;
+border-radius: 10px;
+margin: 20px 0;
+overflow: hidden;
+}
+.bar {
+height: 100%;
+width: 0%;
+background: var(--primary);
+transition: 0.5s ease-in-out;
+}
+img {
+width: 100%;
+max-width: 250px;
+height: auto;
+border-radius: 20px;
+margin: 15px 0;
+box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+/* The moving "No" button area */
+#p4 { position: relative; min-height: 250px; }
+#noBtn { position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; transition: 0.2s; }
+.heart {
+position: fixed;
+bottom: -10%;
+font-size: 20px;
+animation: float 5s linear infinite;
+opacity: 0;
+pointer-events: none;
+}
+@keyframes float {
+0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+20% { opacity: 0.8; }
+100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+input {
+padding: 12px;
+border-radius: 10px;
+border: 2px solid #eee;
+margin-top: 15px;
+width: 80%;
+outline: none;
+transition: 0.3s;
+}
+input:focus { border-color: var(--primary); }
+.typewriter {
+font-size: 18px;
+font-weight: 600;
+color: var(--secondary);
+min-height: 25px;
+margin-bottom: 10px;
+}
+.whatsapp-btn { background: #25D366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+.whatsapp-btn:hover { background: #128C7E; }
+</style>
+</head>
+<body>
+<div class="card">
+<div id="lock">
+<h1>Private Page 🔒</h1>
+<p>This page was made for <b>Adeola</b> only.</p>
+<p>Type your name to unlock it.</p>
+<input type="text" id="nameInput" placeholder="Enter name..." onkeydown="if(event.key==='Enter') unlock()">
+<br>
+<button onclick="unlock()">Unlock</button>
+<p id="error" style="color:var(--primary); display:none; margin-top:15px; font-weight:bold;">Hmm... that's not quite right 👀</p>
+</div>
+<div id="main" class="hidden">
+<div class="typewriter" id="typeText"></div>
+<div class="progress-container">
+<div class="bar" id="bar"></div>
+</div>
+<div id="p1">
+<h1>Hi Adeola 🌹</h1>
+<p>I made something small for you.<br>Take your time going through it.</p>
+<button onclick="next(1, 33)">Start</button>
+</div>
+<div id="p2" class="hidden">
+<h1>About You...</h1>
+<img src="her-photo.jpg" alt="Adeola">
+<p>You have a personality that makes me do things I normally wouldn't do.</p>
+<p>You make our time together feel natural, and you keep getting more beautiful.</p>
+<button onclick="next(2, 66)">Continue</button>
+</div>
+<div id="p3" class="hidden">
+<h1>Something I realized</h1>
+<p>Every time we go out together, I always look forward to the next time I see you.</p>
+<p>Somewhere along the way I realized...<br><b>I really like you.</b></p>
+<button onclick="next(3, 100)">One more thing</button>
+</div>
+<div id="p4" class="hidden">
+<h1>So Adeola...</h1>
+<h2 style="color:var(--secondary)">Will you be my girlfriend?</h2>
+<div style="margin-top: 40px;">
+<button onclick="yes()">Yes 💕</button>
+<button id="noBtn" onmouseover="moveNo()">No 🙈</button>
+</div>
+</div>
+<div id="p5" class="hidden">
+<h1>Yay ❤️</h1>
+<p>I knew you had good taste!</p>
+<p>I'm waiting for your message:</p>
+<button class="whatsapp-btn" onclick="sendWhatsApp()">Confirm on WhatsApp 📱</button>
+</div>
+</div>
+</div>
+<script>
+function unlock() {
+let name = document.getElementById("nameInput").value.toLowerCase().trim();
+if (name === "adeola") {
+document.getElementById("lock").classList.add("hidden");
+document.getElementById("main").classList.remove("hidden");
+startTypewriter();
+startHearts(); // Start background animation
+} else {
+document.getElementById("error").style.display = "block";
+}
+}
+function startTypewriter() {
+const text = "A digital letter for a special person.";
+let i = 0;
+function type() {
+if (i < text.length) {
+document.getElementById("typeText").innerHTML += text.charAt(i);
+i++;
+setTimeout(type, 60);
+}
+}
+type();
+}
+function next(currentNum, progress) {
+document.getElementById("p" + currentNum).classList.add("hidden");
+document.getElementById("p" + (currentNum + 1)).classList.remove("hidden");
+document.getElementById("bar").style.width = progress + "%";
+}
+function moveNo() {
+const btn = document.getElementById("noBtn");
+const card = document.querySelector(".card");
+// Calculate boundaries within the card to keep the button inside
+const maxX = card.clientWidth - btn.clientWidth - 40;
+const maxY = 200; // Restricted height area for the "No" button
+const newX = Math.random() * maxX;
+const newY = Math.random() * maxY;
+btn.style.left = newX + "px";
+btn.style.top = newY + "px";
+}
+function yes() {
+document.getElementById("p4").classList.add("hidden");
+document.getElementById("p5").classList.remove("hidden");
+document.getElementById("bar").style.background = "#25D366";
+createConfetti();
+}
+function sendWhatsApp() {
+const phoneNumber = "2340000000000"; // REPLACE WITH YOUR PHONE NUMBER (include country code)
+const message = encodeURIComponent("Yes Adeola will be your girlfriend! ❤️");
+window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+}
+function startHearts() {
+setInterval(() => {
+const heart = document.createElement("div");
+heart.innerHTML = "❤️";
+heart.className = "heart";
+heart.style.left = Math.random() * 100 + "vw";
+heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+document.body.appendChild(heart);
+setTimeout(() => heart.remove(), 5000);
+}, 600);
+}
+function createConfetti() {
+for(let i = 0; i < 50; i++) {
+setTimeout(() => {
+const heart = document.createElement("div");
+heart.innerHTML = "🌸";
+heart.className = "heart";
+heart.style.left = Math.random() * 100 + "vw";
+heart.style.fontSize = "25px";
+document.body.appendChild(heart);
+}, i * 50);
+}
+}
+</script>
+</body>
+</html>
